@@ -5,18 +5,26 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @Transactional
+ - 로직이 성공적으로 수행되면 커밋하도록 동작
+ - 테스트에 존재할 경우 스프링은 테스트를 트랜잭션 안에서 실행하고, 테스트가 끝나면 트랜잭션을 자동으로 롤백
+
+ * @Commit
+ - 클래스 또는 메서드에 붙이면 테스트 종료 후 롤백 대신 커밋이 수행됨
+ - @Rollback(value = false) 를 사용해도 됨
+ */
+//@Commit
+@Transactional
 @SpringBootTest
 class ItemRepositoryTest {
 
@@ -24,18 +32,18 @@ class ItemRepositoryTest {
     ItemRepository itemRepository;
 
     //트랜잭션 관련 코드
-    @Autowired
-    PlatformTransactionManager transactionManager;
-    TransactionStatus status;
+//    @Autowired
+//    PlatformTransactionManager transactionManager;
+//    TransactionStatus status;
 
     /**
      * 각각의 테스트 케이스 실행전 동작 -> 각각의 테스트를 트랜잭션 범위 안에서 실행 가능
      */
-    @BeforeEach
-    void beforeEach() {
-        //트랜잭션 시작
-        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    }
+//    @BeforeEach
+//    void beforeEach() {
+//        //트랜잭션 시작
+//        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+//    }
 
     @AfterEach
     void afterEach() {
@@ -45,7 +53,7 @@ class ItemRepositoryTest {
         }
 
         //트랜잭션 롤밸
-        transactionManager.rollback(status);
+        //transactionManager.rollback(status);
     }
 
     @Test
