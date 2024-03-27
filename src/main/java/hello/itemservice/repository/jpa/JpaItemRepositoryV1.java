@@ -14,6 +14,14 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @Repository 기능
+ 1. 컴포넌트 스캔의 대상이 됨
+ 2. 에외 변환 AOP 의 적용 대상이 됨
+ - 스프링과 JPA 를 함께 사용하는 경우 스프링은 JPA 예외 변환기(PersistenceExceptionTranslator) 를 등록
+ - 예외 변환 AOP 프록시는 JPA 관련 예외가 발생하면 JPA 예외 변환기를 통해 발생한 예외를 스프링 데이터 접근 예외로 변환(강의자료 그림 참고)
+ - 서비스 계층 --- 예외 변환 AOP Proxy --- JpaItemRepository --- EntityManager
+ */
 @Slf4j
 @Repository
 @Transactional  //JPA 의 모든 데이터 변경은 트랜잭션 안에서 이루어져야 함(조회는 트랜잭션 없이 가능)
