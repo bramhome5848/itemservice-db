@@ -18,6 +18,9 @@ import java.util.Optional;
  - ItemService 가 SpringDataJpaItemRepository 를 직접 사용하도록 코드 수정하면 문제는 해결할 수 있음
  - 하지만 ItemService 의 코드 변경 없이 ItemService 가 ItemRepository 에 대한 의존을 유지하면서 DI 를 통해 구현기술을 변경하고 싶음
  -> JpaItemRepositoryV2 는 ItemRepository 와 SpringDataJpaItemRepository 사이를 맞추기 위한 어댑터처럼 사용
+
+ * 예외 변환
+ - 스프링 데이터 JPA 도 스프링 예외 추상화를 지원, 스프링 데이터 JPA 가 만들어주는 프록시에서 예외 변환을 처리하기 때문에 @Repository 가 없어도 예외 변환됨
  */
 @Repository
 @Transactional
